@@ -1,6 +1,22 @@
-#include "utility.h"
+#include "./utility.h"
 
-void printImage(const ncnn::Mat &mat) {
+FEATURE ncnn_to_eigen(const ncnn::Mat& mat) {
+  int rows = mat.h;
+  int cols = mat.w;
+  const float* data = mat.channel(0);
+
+  // Copy the data from the ncnn::Mat to the Eigen matrix
+  Eigen::MatrixXf eigenMat(rows, cols);
+  for (int row = 0; row < rows; ++row) {
+    for (int col = 0; col < cols; ++col) {
+      eigenMat(row, col) = data[row * cols + col];
+    }
+  }
+
+  return eigenMat;
+}
+
+void printImage(const ncnn::Mat& mat) {
   int width = mat.w;
   int height = mat.h;
   int channels = mat.c;
@@ -16,7 +32,7 @@ void printImage(const ncnn::Mat &mat) {
   }
 }
 
-void printMinMaxValues(const ncnn::Mat &mat, float *max_val, float *min_val) {
+void printMinMaxValues(const ncnn::Mat& mat, float* max_val, float* min_val) {
   int size = mat.total();
   int width = mat.w;
   int height = mat.h;

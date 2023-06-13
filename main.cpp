@@ -59,7 +59,7 @@ int main(int argc, char** argv) {
     // Preprocess the image
     float mean_vals[3] = {0.485f * 255.f, 0.456f * 255.f, 0.406f * 255.f};
     float norm_vals[3] = {1 / 0.229f / 255.f, 1 / 0.224f / 255.f,
-                          1 / 0.225f / 255.f};
+                          1 / .225f / 255.f};
 
     // const float mean_vals[3] = {0.485f, 0.456f, 0.406f};
     // const float norm_vals[3] = {0.229f, 0.224f, 0.225f};
@@ -86,8 +86,10 @@ int main(int argc, char** argv) {
     results.push_back(features);
   }
 
+  auto distance = Distance{};
+
   for (const auto& result : results) {
-    auto dist = euclidean_distance(results[5], result);
+    auto dist = distance.euclidean_distance(results[5], result);
     std::cout << "Distance: " << dist << std::endl;
   }
 }
