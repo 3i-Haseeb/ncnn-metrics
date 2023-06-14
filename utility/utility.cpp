@@ -1,5 +1,6 @@
 #include "./utility.h"
 
+// Convert ncnn to eigen matric
 FEATURE ncnn_to_eigen(const ncnn::Mat& mat) {
   int rows = mat.h;
   int cols = mat.w;
@@ -32,7 +33,7 @@ void printImage(const ncnn::Mat& mat) {
   }
 }
 
-void printMinMaxValues(const ncnn::Mat& mat, float* max_val, float* min_val) {
+void getMinMaxValues(const ncnn::Mat& mat, float* max_val, float* min_val) {
   int size = mat.total();
   int width = mat.w;
   int height = mat.h;

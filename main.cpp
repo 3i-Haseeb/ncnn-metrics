@@ -49,7 +49,6 @@ int main(int argc, char** argv) {
 
     auto img = cv::Mat();
     cv::resize(orig_img, img, cv::Size(128, 256));
-    // std::cout << img.size() << std::endl;
 
     // Convert image data to ncnn format
     // Opencv image is bgr, model also expects bgr
@@ -61,12 +60,11 @@ int main(int argc, char** argv) {
     float norm_vals[3] = {1 / 0.229f / 255.f, 1 / 0.224f / 255.f,
                           1 / .225f / 255.f};
 
-    // const float mean_vals[3] = {0.485f, 0.456f, 0.406f};
-    // const float norm_vals[3] = {0.229f, 0.224f, 0.225f};
     input.substract_mean_normalize(mean_vals, norm_vals);
 
-    float max_val, min_val = {};
-    printMinMaxValues(input, &max_val, &min_val);
+    // float max_val, min_val = {};
+    // getMinMaxValues(input, &max_val, &min_val);
+    // std::cout << max_val << ", " << min_val << std::endl;
 
     // Inference
     ncnn::Extractor extractor = net.create_extractor();
@@ -89,7 +87,7 @@ int main(int argc, char** argv) {
   auto distance = Distance{};
 
   for (const auto& result : results) {
-    auto dist = distance.euclidean_distance(results[5], result);
+    auto dist = distance.cosine_similarity(results[4], result);
     std::cout << "Distance: " << dist << std::endl;
   }
 }
